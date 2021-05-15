@@ -33,7 +33,7 @@ public class LoginStepDefinitions {
     @When("I call the login API")
     public void i_call_the_login_api() {
 
-        loginResponse = loginService.post(loginRequest);
+        loginResponse = loginService.login(loginRequest);
     }
 
     @Then("should return the token successfully")
