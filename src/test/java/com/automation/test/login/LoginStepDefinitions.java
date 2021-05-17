@@ -4,7 +4,7 @@ import com.automation.factory.LoginFactory;
 import com.automation.model.LoginRequest;
 import com.automation.model.LoginResponse;
 import com.automation.service.LoginService;
-import com.automation.utils.ResponseUtils;
+import com.automation.model.ResponseData;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -23,7 +23,7 @@ public class LoginStepDefinitions {
 
     private LoginRequest loginRequest;
 
-    private ResponseUtils<LoginResponse> loginResponse;
+    private ResponseData<LoginResponse> loginResponseData;
 
     @Given("I have a valid credential")
     public void i_have_a_valid_credential() {
@@ -34,13 +34,13 @@ public class LoginStepDefinitions {
     @When("I call the login API")
     public void i_call_the_login_api() {
 
-        loginResponse = loginService.login(loginRequest);
+        loginResponseData = loginService.login(loginRequest);
     }
 
     @Then("should return the token successfully")
     public void should_return_the_token_successfully() {
 
-        Assert.assertEquals((int)loginResponse.getStatusCode(), 200);
-        Assert.assertNotNull(loginResponse.getData().getToken());
+        Assert.assertEquals(loginResponseData.getStatusCode(), 200);
+        Assert.assertNotNull(loginResponseData.getData().getToken());
     }
 }

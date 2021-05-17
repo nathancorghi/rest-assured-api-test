@@ -1,4 +1,4 @@
-package com.automation.utils;
+package com.automation.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
-public class ResponseUtils<T> {
+public class ResponseData<T> {
 
     public T data;
 
-    public Integer statusCode;
+    public int statusCode;
 }

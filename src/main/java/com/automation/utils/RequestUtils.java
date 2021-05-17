@@ -1,6 +1,7 @@
 package com.automation.utils;
 
 import com.automation.Constants;
+import com.automation.model.ResponseData;
 import com.automation.service.AbstractService;
 import com.google.gson.Gson;
 import io.restassured.RestAssured;
@@ -13,16 +14,16 @@ import org.springframework.stereotype.Component;
 public class RequestUtils extends AbstractService {
 
     @Autowired
-    protected Gson gson;
+    private Gson gson;
 
     @Autowired
-    protected ResponseUtils responseUtils;
+    private ResponseData responseData;
 
     private RequestSpecification requestSpecification;
 
     private Response response;
 
-    public <T> ResponseUtils<T> post(String url, Object request, Class<T> clazz) {
+    public <T> ResponseData<T> post(String url, Object request, Class<T> clazz) {
 
         RestAssured.baseURI = Constants.BASE_URL;
 
@@ -33,9 +34,9 @@ public class RequestUtils extends AbstractService {
         response = requestSpecification.body(gson.toJson(request))
                 .post(url);
 
-        responseUtils.setData(response.then().extract().response().getBody().as(clazz));
-        responseUtils.setStatusCode(response.then().extract().response().getStatusCode());
+        responseData.setData(response.then().extract().response().getBody().as(clazz));
+        responseData.setStatusCode(response.then().extract().response().getStatusCode());
 
-        return responseUtils;
+        return responseData;
     }
 }
