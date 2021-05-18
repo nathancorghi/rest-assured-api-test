@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Type;
+
 @Component
 public class RequestUtils {
 
@@ -18,7 +20,7 @@ public class RequestUtils {
     private Gson gson;
 
     @Autowired
-    private ResponseData responseData;
+    private ResponseData<Object> responseData;
 
     private RequestSpecification requestSpecification;
 
@@ -42,9 +44,10 @@ public class RequestUtils {
         logger.info("STATUS -> Code {}", response.statusCode());
         logger.info("RESPONSE -> Body {}", gson.newBuilder().setPrettyPrinting().create().toJson(response.getBody().as(Object.class)));
 
-        responseData.setData(response.then().extract().response().getBody().as(clazz));
+        responseData.setData(response.then().extract().response().getBody().as((Type) clazz));
         responseData.setStatusCode(response.then().extract().response().getStatusCode());
+        responseData.setError(response.then().extract().response().getBody().as((Type) clazz));
 
-        return responseData;
+        return (ResponseData<T>) responseData;
     }
 }

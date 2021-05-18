@@ -23,7 +23,7 @@ public class LoginStepDefinitions {
 
     private LoginRequest loginRequest;
 
-    private ResponseData<LoginResponse> loginResponseData;
+    private ResponseData<LoginResponse> loginResponse;
 
     @Given("I have a valid credential")
     public void i_have_a_valid_credential() {
@@ -31,16 +31,30 @@ public class LoginStepDefinitions {
         loginRequest = loginFactory.buildLogin();
     }
 
+    @Given("I have a invalid credential")
+    public void i_have_a_invalid_credential() {
+
+        loginRequest = loginFactory.buildLogin();
+        loginRequest.setEmail("michael.lawson@reqres.ini");
+    }
+
     @When("I call the login API")
     public void i_call_the_login_api() {
 
-        loginResponseData = loginService.login(loginRequest);
+        loginResponse = loginService.login(loginRequest);
     }
 
     @Then("should return the token successfully")
     public void should_return_the_token_successfully() {
 
-        Assert.assertEquals(loginResponseData.getStatusCode(), 200);
-        Assert.assertNotNull(loginResponseData.getData().getToken());
+        Assert.assertEquals(loginResponse.getStatusCode(), 200);
+        Assert.assertNotNull(loginResponse.getData().getToken());
+    }
+
+    @Then("should return the message of user not found")
+    public void should_return_the_message_of_user_not_found() {
+
+        Assert.assertEquals(loginResponse.getStatusCode(), 400);
+        Assert.assertEquals(loginResponse.getData().getError(), "user not found");
     }
 }

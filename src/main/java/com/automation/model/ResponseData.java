@@ -12,4 +12,6 @@ public class ResponseData<T> {
     public T data;
 
     public int statusCode;
+
+    public T error;
 }

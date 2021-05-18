@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginResponse extends ResponseError {
+public class ResponseError<T> {
 
-    private String token;
+    public T error;
 }
