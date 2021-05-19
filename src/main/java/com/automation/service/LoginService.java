@@ -1,8 +1,8 @@
 package com.automation.service;
 
-import com.automation.model.LoginRequest;
-import com.automation.model.LoginResponse;
-import com.automation.model.ResponseData;
+import com.automation.model.request.LoginRequest;
+import com.automation.model.response.LoginResponse;
+import com.automation.model.response.ResponseData;
 import org.springframework.stereotype.Service;
 
 @Service

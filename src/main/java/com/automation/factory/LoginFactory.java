@@ -1,6 +1,6 @@
 package com.automation.factory;
 
-import com.automation.model.LoginRequest;
+import com.automation.model.request.LoginRequest;
 import org.springframework.stereotype.Component;
 
 @Component

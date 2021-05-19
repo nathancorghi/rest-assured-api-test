@@ -1,10 +1,10 @@
 package com.automation.test.login;
 
 import com.automation.factory.LoginFactory;
-import com.automation.model.LoginRequest;
-import com.automation.model.LoginResponse;
+import com.automation.model.request.LoginRequest;
+import com.automation.model.response.LoginResponse;
 import com.automation.service.LoginService;
-import com.automation.model.ResponseData;
+import com.automation.model.response.ResponseData;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;

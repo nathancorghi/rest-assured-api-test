@@ -7,9 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class LoginRequest {
+public class Support {
 
-    private String email;
+    private String url;
 
-    private String password;
+    private String text;
 }

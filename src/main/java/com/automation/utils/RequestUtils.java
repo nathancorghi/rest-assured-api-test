@@ -1,7 +1,7 @@
 package com.automation.utils;
 
 import com.automation.Constants;
-import com.automation.model.ResponseData;
+import com.automation.model.response.ResponseData;
 import com.google.gson.Gson;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -19,9 +19,6 @@ public class RequestUtils {
     @Autowired
     private Gson gson;
 
-    @Autowired
-    private ResponseData<Object> responseData;
-
     private RequestSpecification requestSpecification;
 
     private Response response;
@@ -29,6 +26,8 @@ public class RequestUtils {
     private static final Logger logger = LoggerFactory.getLogger(RequestUtils.class);
 
     public <T> ResponseData<T> post(String url, Object request, Class<T> clazz) {
+
+        ResponseData<T> responseData = new ResponseData<>();
 
         RestAssured.baseURI = Constants.BASE_URL;
 
@@ -48,6 +47,29 @@ public class RequestUtils {
         responseData.setStatusCode(response.then().extract().response().getStatusCode());
         responseData.setError(response.then().extract().response().getBody().as((Type) clazz));
 
-        return (ResponseData<T>) responseData;
+        return responseData;
+    }
+
+    public <T> ResponseData<T> get(String url, Class<T> clazz, Object... endpointParameters) {
+
+        ResponseData<T> responseData = new ResponseData<>();
+
+        RestAssured.baseURI = Constants.BASE_URL;
+
+        requestSpecification = RestAssured.given();
+
+        requestSpecification.header("Content-Type", "application/json");
+
+        response = requestSpecification.get(url, endpointParameters);
+
+        logger.info("REQUEST -> Executing POST on {}", url);
+        logger.info("STATUS -> Code {}", response.statusCode());
+        logger.info("RESPONSE -> Body {}", gson.newBuilder().setPrettyPrinting().create().toJson(response.getBody().as(Object.class)));
+
+        responseData.setData(response.then().extract().response().getBody().as((Type) clazz));
+        responseData.setStatusCode(response.then().extract().response().getStatusCode());
+        responseData.setError(response.then().extract().response().getBody().as((Type) clazz));
+
+        return responseData;
     }
 }
