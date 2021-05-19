@@ -1,4 +1,4 @@
-# API Test Automation With Rest Assured
+# Automated API Test With Rest Assured
 
 <h1> Before use </h1>
 
