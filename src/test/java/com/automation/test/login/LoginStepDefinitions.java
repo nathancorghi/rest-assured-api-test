@@ -38,6 +38,20 @@ public class LoginStepDefinitions {
         loginRequest.setEmail("michael.lawson@reqres.ini");
     }
 
+    @Given("I have a credential without fill field email")
+    public void i_have_a_credential_without_fill_field_email() {
+
+        loginRequest = loginFactory.buildLogin();
+        loginRequest.setEmail(null);
+    }
+
+    @Given("I have a credential without fill field password")
+    public void i_have_a_credential_without_fill_field_password() {
+
+        loginRequest = loginFactory.buildLogin();
+        loginRequest.setPassword(null);
+    }
+
     @When("I call the login API")
     public void i_call_the_login_api() {
 
@@ -51,10 +65,10 @@ public class LoginStepDefinitions {
         Assert.assertNotNull(loginResponse.getData().getToken());
     }
 
-    @Then("should return the message of user not found")
-    public void should_return_the_message_of_user_not_found() {
+    @Then("should return the message of {string}")
+    public void should_return_the_message_of(String message) {
 
         Assert.assertEquals(loginResponse.getStatusCode(), 400);
-        Assert.assertEquals(loginResponse.getData().getError(), "user not found");
+        Assert.assertEquals(loginResponse.getError().getError(), message);
     }
 }
