@@ -38,6 +38,20 @@ public class RegisterStepDefinitions {
         registerRequest.setEmail("eve.holt@reqres.ini");
     }
 
+    @Given("I have a credential without fill field email")
+    public void i_have_a_credential_without_fill_field_email() {
+
+        registerRequest = registerFactory.buildRegister();
+        registerRequest.setEmail(null);
+    }
+
+    @Given("I have a credential without fill field password")
+    public void i_have_a_credential_without_fill_field_password() {
+
+        registerRequest = registerFactory.buildRegister();
+        registerRequest.setPassword(null);
+    }
+
     @When("I call the register API")
     public void i_call_the_register_api() {
 
