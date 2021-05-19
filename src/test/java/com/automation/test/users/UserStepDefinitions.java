@@ -4,7 +4,7 @@ import com.automation.factory.RegisterFactory;
 import com.automation.model.request.RegisterRequest;
 import com.automation.model.response.RegisterResponse;
 import com.automation.model.response.ResponseData;
-import com.automation.model.response.UserConsultSingleResponse;
+import com.automation.model.response.UserConsultResponse;
 import com.automation.service.RegisterService;
 import com.automation.service.UsersService;
 import cucumber.api.java.en.Given;
@@ -30,7 +30,7 @@ public class UserStepDefinitions {
 
     private ResponseData<RegisterResponse> registerResponse;
 
-    private ResponseData<UserConsultSingleResponse> usersResponse;
+    private ResponseData<UserConsultResponse> usersResponse;
 
     @Given("I have an user already registered")
     public void i_have_an_user_already_registered() {
