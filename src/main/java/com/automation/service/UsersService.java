@@ -1,16 +1,31 @@
 package com.automation.service;
 
+import com.automation.model.request.UsersRequest;
+import com.automation.model.response.CreateUsersResponse;
 import com.automation.model.response.ResponseData;
-import com.automation.model.response.UserConsultResponse;
+import com.automation.model.response.UpdateUsersResponse;
+import com.automation.model.response.UsersConsultResponse;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UsersService extends AbstractService {
 
-    private static final String URL = "/api/users/{0}";
+    private static final String URL_USER = "/api/users/{0}";
 
-    public ResponseData<UserConsultResponse> consultSingleUser(Integer id) {
+    private static final String URL_CREATE_USER = "/api/users";
 
-        return requestUtils.get(URL, UserConsultResponse.class, id);
+    public ResponseData<UsersConsultResponse> consultSingleUser(Integer id) {
+
+        return requestUtils.get(URL_USER, UsersConsultResponse.class, id);
+    }
+
+    public ResponseData<CreateUsersResponse> createUser(UsersRequest usersRequest) {
+
+        return requestUtils.post(URL_CREATE_USER, usersRequest, CreateUsersResponse.class);
+    }
+
+    public ResponseData<UpdateUsersResponse> updateUser(Integer id, UsersRequest usersRequest) {
+
+        return requestUtils.put(URL_USER, usersRequest, UpdateUsersResponse.class, id);
     }
 }

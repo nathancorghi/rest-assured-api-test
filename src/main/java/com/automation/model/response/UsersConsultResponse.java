@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserConsultResponse extends ResponseError {
+public class UsersConsultResponse extends ResponseError {
 
     private Data data;
 

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
+import java.text.MessageFormat;
 
 @Component
 public class RequestUtils {
@@ -52,6 +53,8 @@ public class RequestUtils {
 
     public <T> ResponseData<T> get(String url, Class<T> clazz, Object... endpointParameters) {
 
+        url = MessageFormat.format(url, endpointParameters);
+
         ResponseData<T> responseData = new ResponseData<>();
 
         RestAssured.baseURI = Constants.BASE_URL;
@@ -60,9 +63,36 @@ public class RequestUtils {
 
         requestSpecification.header("Content-Type", "application/json");
 
-        response = requestSpecification.get(url, endpointParameters);
+        response = requestSpecification.get(url);
 
         logger.info("REQUEST -> Executing POST on {}", url);
+        logger.info("STATUS -> Code {}", response.statusCode());
+        logger.info("RESPONSE -> Body {}", gson.newBuilder().setPrettyPrinting().create().toJson(response.getBody().as(Object.class)));
+
+        responseData.setData(response.then().extract().response().getBody().as((Type) clazz));
+        responseData.setStatusCode(response.then().extract().response().getStatusCode());
+        responseData.setError(response.then().extract().response().getBody().as((Type) clazz));
+
+        return responseData;
+    }
+
+    public <T> ResponseData<T> put(String url, Object request, Class<T> clazz, Object... endpointParameters) {
+
+        url = MessageFormat.format(url, endpointParameters);
+
+        ResponseData<T> responseData = new ResponseData<>();
+
+        RestAssured.baseURI = Constants.BASE_URL;
+
+        requestSpecification = RestAssured.given();
+
+        requestSpecification.header("Content-Type", "application/json");
+
+        response = requestSpecification.body(gson.toJson(request))
+                .put(url);
+
+        logger.info("REQUEST -> Executing POST on {}", url);
+        logger.info("REQUEST -> Body: {}", gson.newBuilder().setPrettyPrinting().create().toJson(request));
         logger.info("STATUS -> Code {}", response.statusCode());
         logger.info("RESPONSE -> Body {}", gson.newBuilder().setPrettyPrinting().create().toJson(response.getBody().as(Object.class)));
 
