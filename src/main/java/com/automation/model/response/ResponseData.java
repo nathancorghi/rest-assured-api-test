@@ -10,6 +10,4 @@ public class ResponseData<T> {
     private T data;
 
     private int statusCode;
-
-    private T error;
 }

@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ResponseError<T> {
+public class ResponseError {
 
-    public T error;
+    private String error;
 }

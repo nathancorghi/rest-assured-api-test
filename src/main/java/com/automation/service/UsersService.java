@@ -1,10 +1,7 @@
 package com.automation.service;
 
 import com.automation.model.request.UsersRequest;
-import com.automation.model.response.CreateUsersResponse;
-import com.automation.model.response.ResponseData;
-import com.automation.model.response.UpdateUsersResponse;
-import com.automation.model.response.UsersConsultResponse;
+import com.automation.model.response.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,5 +24,10 @@ public class UsersService extends AbstractService {
     public ResponseData<UpdateUsersResponse> updateUser(Integer id, UsersRequest usersRequest) {
 
         return requestUtils.put(URL_USER, usersRequest, UpdateUsersResponse.class, id);
+    }
+
+    public ResponseData deleteUser(Integer id) {
+
+        return requestUtils.delete(URL_USER, id);
     }
 }

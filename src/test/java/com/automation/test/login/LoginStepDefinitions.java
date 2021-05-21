@@ -68,7 +68,9 @@ public class LoginStepDefinitions {
     @Then("should return the message of {string}")
     public void should_return_the_message_of(String message) {
 
+        //String x = loginResponse.getError()
+
         Assert.assertEquals(loginResponse.getStatusCode(), 400);
-        Assert.assertEquals(loginResponse.getError().getError(), message);
+        Assert.assertEquals(loginResponse.getData().getError(), message);
     }
 }

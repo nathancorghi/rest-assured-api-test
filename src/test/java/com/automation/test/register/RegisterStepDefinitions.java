@@ -70,6 +70,6 @@ public class RegisterStepDefinitions {
     public void should_return_the_message_of(String message) {
 
         Assert.assertEquals(registerResponse.getStatusCode(), 400);
-        Assert.assertEquals(registerResponse.getError().getError(), message);
+        Assert.assertEquals(registerResponse.getData().getError(), message);
     }
 }

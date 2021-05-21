@@ -46,6 +46,8 @@ public class UsersStepDefinitions {
 
     private Integer id;
 
+    private ResponseData<?> deleteUserResponse;
+
     @Given("I have an user already registered")
     public void i_have_an_user_already_registered() {
 
@@ -103,6 +105,12 @@ public class UsersStepDefinitions {
         updateUsersResponse = usersService.updateUser(id, updateUsersRequest);
     }
 
+    @When("I call the API to delete the user")
+    public void i_call_the_API_to_delete_the_user() {
+
+        deleteUserResponse = usersService.deleteUser(id);
+    }
+
     @Then("should return the user information correctly")
     public void should_return_the_user_information_correctly() {
 
@@ -148,5 +156,11 @@ public class UsersStepDefinitions {
         Assert.assertEquals(updateUsersResponse.getData().getJob(), updateUsersRequest.getJob());
         Assert.assertEquals(DateUtils.formattedDateTimeWithoutSeconds(updateUsersResponse.getData().getUpdatedAt()),
                 DateUtils.getActualDateAndTime());
+    }
+
+    @Then("should remove the user successfully")
+    public void should_remove_the_user_successfully() {
+
+        Assert.assertEquals(deleteUserResponse.getStatusCode(), 204);
     }
 }
