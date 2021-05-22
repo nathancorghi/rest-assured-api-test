@@ -48,6 +48,10 @@ public class UsersStepDefinitions {
 
     private ResponseData<?> deleteUserResponse;
 
+    private Integer page;
+
+    private ResponseData<UsersListConsultResponse> usersListConsultResponse;
+
     @Given("I have an user already registered")
     public void i_have_an_user_already_registered() {
 
@@ -61,6 +65,12 @@ public class UsersStepDefinitions {
         registerRequest = registerFactory.buildRegister();
         registerRequest.setEmail("eve.holt@reqres.ini");
         registerResponse = registerService.register(registerRequest);
+    }
+
+    @Given("I have the page number {int} to consult users information")
+    public void i_have_the_page_number_to_consult_users_information(Integer page) {
+
+        this.page = page;
     }
 
     @Given("I'm including a new user")
@@ -81,6 +91,12 @@ public class UsersStepDefinitions {
     public void i_consult_the_information_of_user_using_id() {
 
         usersConsultResponse = usersService.consultSingleUser(registerResponse.getData().getId());
+    }
+
+    @When("I consult the information of users using page number")
+    public void i_consult_the_information_of_users_using_page_number() {
+
+        usersListConsultResponse = usersService.consultListOfUsers(page);
     }
 
     @When("I call the API for add a new user")
@@ -123,10 +139,46 @@ public class UsersStepDefinitions {
         Assert.assertNotNull(usersConsultResponse.getData().getSupport().getText());
     }
 
-    @Then("should not return any information of user")
-    public void should_not_return_any_information_of_user() {
+    @Then("should not return response data")
+    public void should_not_return_response_data() {
 
         Assert.assertEquals(usersConsultResponse.getStatusCode(), 404);
+    }
+
+    @Then("should return the users information correctly")
+    public void should_return_the_users_information_correctly() {
+
+        Assert.assertEquals(usersListConsultResponse.getStatusCode(), 200);
+        Assert.assertEquals(usersListConsultResponse.getData().getPage(), page);
+        Assert.assertNotNull(usersListConsultResponse.getData().getPer_page());
+        Assert.assertNotNull(usersListConsultResponse.getData().getTotal());
+        Assert.assertNotNull(usersListConsultResponse.getData().getTotal_pages());
+
+        usersListConsultResponse.getData().getData().forEach(
+                data -> {
+                    Assert.assertNotNull(data.getId());
+                    Assert.assertNotNull(data.getEmail());
+                    Assert.assertNotNull(data.getFirst_name());
+                    Assert.assertNotNull(data.getLast_name());
+                    Assert.assertNotNull(data.getAvatar());
+                }
+        );
+
+        Assert.assertNotNull(usersListConsultResponse.getData().getSupport().getUrl());
+        Assert.assertNotNull(usersListConsultResponse.getData().getSupport().getText());
+    }
+
+    @Then("should not return users information")
+    public void should_not_return_users_information() {
+
+        Assert.assertEquals(usersListConsultResponse.getStatusCode(), 200);
+        Assert.assertEquals(usersListConsultResponse.getData().getPage(), page);
+        Assert.assertNotNull(usersListConsultResponse.getData().getPer_page());
+        Assert.assertNotNull(usersListConsultResponse.getData().getTotal());
+        Assert.assertNotNull(usersListConsultResponse.getData().getTotal_pages());
+        Assert.assertTrue(usersListConsultResponse.getData().getData().isEmpty());
+        Assert.assertNotNull(usersListConsultResponse.getData().getSupport().getUrl());
+        Assert.assertNotNull(usersListConsultResponse.getData().getSupport().getText());
     }
 
     @Then("should create successful a new user")
@@ -135,9 +187,9 @@ public class UsersStepDefinitions {
         Assert.assertEquals(createUsersResponse.getStatusCode(), 201);
         Assert.assertEquals(createUsersResponse.getData().getName(), createUsersRequest.getName());
         Assert.assertEquals(createUsersResponse.getData().getJob(), createUsersRequest.getJob());
-        Assert.assertTrue(createUsersResponse.getData().getId() > 0);
-        Assert.assertEquals(DateUtils.formattedDateTimeWithoutSeconds(createUsersResponse.getData().getCreatedAt()),
-                DateUtils.getActualDateAndTime());
+        Assert.assertNotNull(createUsersResponse.getData().getId());
+        Assert.assertEquals(DateUtils.removeDateTime(createUsersResponse.getData().getCreatedAt()),
+                DateUtils.getActualDate());
     }
 
     @Then("should change the user name successfully")
@@ -145,8 +197,8 @@ public class UsersStepDefinitions {
 
         Assert.assertEquals(updateUsersResponse.getStatusCode(), 200);
         Assert.assertEquals(updateUsersResponse.getData().getName(), updateUsersRequest.getName());
-        Assert.assertEquals(DateUtils.formattedDateTimeWithoutSeconds(updateUsersResponse.getData().getUpdatedAt()),
-                DateUtils.getActualDateAndTime());
+        Assert.assertEquals(DateUtils.removeDateTime(updateUsersResponse.getData().getUpdatedAt()),
+                DateUtils.getActualDate());
     }
 
     @Then("should change the user job successfully")
@@ -154,8 +206,8 @@ public class UsersStepDefinitions {
 
         Assert.assertEquals(updateUsersResponse.getStatusCode(), 200);
         Assert.assertEquals(updateUsersResponse.getData().getJob(), updateUsersRequest.getJob());
-        Assert.assertEquals(DateUtils.formattedDateTimeWithoutSeconds(updateUsersResponse.getData().getUpdatedAt()),
-                DateUtils.getActualDateAndTime());
+        Assert.assertEquals(DateUtils.removeDateTime(updateUsersResponse.getData().getUpdatedAt()),
+                DateUtils.getActualDate());
     }
 
     @Then("should remove the user successfully")

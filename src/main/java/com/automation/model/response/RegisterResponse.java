@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class RegisterResponse extends ResponseError {
 
-    private int id;
+    private Integer id;
 
     private String token;
 }

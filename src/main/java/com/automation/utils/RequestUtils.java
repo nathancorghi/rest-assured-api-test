@@ -14,15 +14,17 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Type;
 import java.text.MessageFormat;
 
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
+
 @Component
 public class RequestUtils {
 
     @Autowired
     private Gson gson;
 
-    private RequestSpecification requestSpecification;
-
     private Response response;
+
+    private RequestSpecification requestSpecification;
 
     private static final Logger logger = LoggerFactory.getLogger(RequestUtils.class);
 
@@ -30,13 +32,10 @@ public class RequestUtils {
 
         ResponseData<T> responseData = new ResponseData<>();
 
-        RestAssured.baseURI = Constants.BASE_URL;
+        requestInitialization();
 
-        requestSpecification = RestAssured.given();
-
-        requestSpecification.header("Content-Type", "application/json");
-
-        response = requestSpecification.body(gson.toJson(request))
+        response = requestSpecification
+                .body(gson.toJson(request))
                 .post(url);
 
         logger.info("REQUEST -> Executing POST on {}", url);
@@ -56,13 +55,10 @@ public class RequestUtils {
 
         ResponseData<T> responseData = new ResponseData<>();
 
-        RestAssured.baseURI = Constants.BASE_URL;
+        requestInitialization();
 
-        requestSpecification = RestAssured.given();
-
-        requestSpecification.header("Content-Type", "application/json");
-
-        response = requestSpecification.get(url);
+        response = requestSpecification
+                .get(url);
 
         logger.info("REQUEST -> Executing GET on {}", url);
         logger.info("STATUS -> Code {}", response.statusCode());
@@ -80,13 +76,10 @@ public class RequestUtils {
 
         ResponseData<T> responseData = new ResponseData<>();
 
-        RestAssured.baseURI = Constants.BASE_URL;
+        requestInitialization();
 
-        requestSpecification = RestAssured.given();
-
-        requestSpecification.header("Content-Type", "application/json");
-
-        response = requestSpecification.body(gson.toJson(request))
+        response = requestSpecification
+                .body(gson.toJson(request))
                 .put(url);
 
         logger.info("REQUEST -> Executing PUT on {}", url);
@@ -106,13 +99,10 @@ public class RequestUtils {
 
         ResponseData<T> responseData = new ResponseData<>();
 
-        RestAssured.baseURI = Constants.BASE_URL;
+        requestInitialization();
 
-        requestSpecification = RestAssured.given();
-
-        requestSpecification.header("Content-Type", "application/json");
-
-        response = requestSpecification.delete(url);
+        response = requestSpecification
+                .delete(url);
 
         logger.info("REQUEST -> Executing DELETE on {}", url);
         logger.info("STATUS -> Code {}", response.statusCode());
@@ -120,5 +110,14 @@ public class RequestUtils {
         responseData.setStatusCode(response.then().extract().response().getStatusCode());
 
         return responseData;
+    }
+
+    private void requestInitialization() {
+
+        RestAssured.baseURI = Constants.BASE_URL;
+
+        requestSpecification = RestAssured.given();
+
+        requestSpecification.contentType(APPLICATION_JSON_VALUE);
     }
 }

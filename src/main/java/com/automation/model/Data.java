@@ -9,7 +9,7 @@ import lombok.Setter;
 @Builder
 public class Data {
 
-    private int id;
+    private Integer id;
 
     private String email;
 

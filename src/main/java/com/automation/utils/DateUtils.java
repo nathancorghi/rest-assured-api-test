@@ -7,16 +7,16 @@ public class DateUtils {
 
     private static SimpleDateFormat formatter;
 
-    public static String getActualDateAndTime() {
+    public static String getActualDate() {
 
-        formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         return formatter.format(new Date());
     }
 
-    public static String formattedDateTimeWithoutSeconds(Date date) {
+    public static String removeDateTime(Date date) {
 
-        formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         return formatter.format(date);
     }

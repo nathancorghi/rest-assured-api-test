@@ -13,7 +13,7 @@ public class CreateUsersResponse extends ResponseError {
 
     private String job;
 
-    private int id;
+    private Integer id;
 
     private Date createdAt;
 }
