@@ -15,7 +15,7 @@ Feature: Consult user data
     When I consult the information of users using page number
     Then should return the users information correctly
 
-  Scenario: Consult list of users by unexisting page number
+  Scenario: Consult list of users by non-existent page number
     Given I have the page number 3 to consult users information
     When I consult the information of users using page number
     Then should not return users information
