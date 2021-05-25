@@ -1,5 +1,6 @@
 package com.automation.model;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,9 +12,11 @@ public class UsersData {
 
     private String email;
 
-    private String first_name;
+    @SerializedName("first_name")
+    private String firstName;
 
-    private String last_name;
+    @SerializedName("last_name")
+    private String lastName;
 
     private String avatar;
 }

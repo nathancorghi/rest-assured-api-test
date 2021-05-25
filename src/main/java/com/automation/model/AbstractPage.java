@@ -1,5 +1,6 @@
 package com.automation.model;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,9 +10,11 @@ public abstract class AbstractPage {
 
     private Integer page;
 
-    private Integer per_page;
+    @SerializedName("per_page")
+    private Integer perPage;
 
     private Integer total;
 
-    private Integer total_pages;
+    @SerializedName("total_pages")
+    private Integer totalPages;
 }

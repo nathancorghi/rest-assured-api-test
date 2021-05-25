@@ -133,7 +133,7 @@ public class UsersStepDefinitions {
         Assert.assertEquals(usersConsultResponse.getStatusCode(), 200);
         Assert.assertEquals(usersConsultResponse.getData().getData().getId(), registerResponse.getData().getId());
         Assert.assertEquals(usersConsultResponse.getData().getData().getEmail(), registerRequest.getEmail());
-        Assert.assertNotNull(usersConsultResponse.getData().getData().getLast_name());
+        Assert.assertNotNull(usersConsultResponse.getData().getData().getLastName());
         Assert.assertNotNull(usersConsultResponse.getData().getData().getAvatar());
         Assert.assertNotNull(usersConsultResponse.getData().getSupport().getUrl());
         Assert.assertNotNull(usersConsultResponse.getData().getSupport().getText());
@@ -150,16 +150,16 @@ public class UsersStepDefinitions {
 
         Assert.assertEquals(usersListConsultResponse.getStatusCode(), 200);
         Assert.assertEquals(usersListConsultResponse.getData().getPage(), page);
-        Assert.assertNotNull(usersListConsultResponse.getData().getPer_page());
+        Assert.assertNotNull(usersListConsultResponse.getData().getPerPage());
         Assert.assertNotNull(usersListConsultResponse.getData().getTotal());
-        Assert.assertNotNull(usersListConsultResponse.getData().getTotal_pages());
+        Assert.assertNotNull(usersListConsultResponse.getData().getTotalPages());
 
         usersListConsultResponse.getData().getData().forEach(
                 data -> {
                     Assert.assertNotNull(data.getId());
                     Assert.assertNotNull(data.getEmail());
-                    Assert.assertNotNull(data.getFirst_name());
-                    Assert.assertNotNull(data.getLast_name());
+                    Assert.assertNotNull(data.getFirstName());
+                    Assert.assertNotNull(data.getLastName());
                     Assert.assertNotNull(data.getAvatar());
                 }
         );
@@ -173,9 +173,9 @@ public class UsersStepDefinitions {
 
         Assert.assertEquals(usersListConsultResponse.getStatusCode(), 200);
         Assert.assertEquals(usersListConsultResponse.getData().getPage(), page);
-        Assert.assertNotNull(usersListConsultResponse.getData().getPer_page());
+        Assert.assertNotNull(usersListConsultResponse.getData().getPerPage());
         Assert.assertNotNull(usersListConsultResponse.getData().getTotal());
-        Assert.assertNotNull(usersListConsultResponse.getData().getTotal_pages());
+        Assert.assertNotNull(usersListConsultResponse.getData().getTotalPages());
         Assert.assertTrue(usersListConsultResponse.getData().getData().isEmpty());
         Assert.assertNotNull(usersListConsultResponse.getData().getSupport().getUrl());
         Assert.assertNotNull(usersListConsultResponse.getData().getSupport().getText());

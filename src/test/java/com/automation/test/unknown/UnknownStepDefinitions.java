@@ -61,9 +61,9 @@ public class UnknownStepDefinitions {
 
         Assert.assertEquals(unknownListConsultResponse.getStatusCode(), 200);
         Assert.assertEquals(unknownListConsultResponse.getData().getPage(), page);
-        Assert.assertNotNull(unknownListConsultResponse.getData().getPer_page());
+        Assert.assertNotNull(unknownListConsultResponse.getData().getPerPage());
         Assert.assertNotNull(unknownListConsultResponse.getData().getTotal());
-        Assert.assertNotNull(unknownListConsultResponse.getData().getTotal_pages());
+        Assert.assertNotNull(unknownListConsultResponse.getData().getTotalPages());
 
         unknownListConsultResponse.getData().getData().forEach(
                 data -> {
@@ -71,7 +71,7 @@ public class UnknownStepDefinitions {
                     Assert.assertNotNull(data.getName());
                     Assert.assertNotNull(data.getYear());
                     Assert.assertNotNull(data.getColor());
-                    Assert.assertNotNull(data.getPantone_value());
+                    Assert.assertNotNull(data.getPantoneValue());
                 }
         );
 
@@ -84,9 +84,9 @@ public class UnknownStepDefinitions {
 
         Assert.assertEquals(unknownListConsultResponse.getStatusCode(), 200);
         Assert.assertEquals(unknownListConsultResponse.getData().getPage(), page);
-        Assert.assertNotNull(unknownListConsultResponse.getData().getPer_page());
+        Assert.assertNotNull(unknownListConsultResponse.getData().getPerPage());
         Assert.assertNotNull(unknownListConsultResponse.getData().getTotal());
-        Assert.assertNotNull(unknownListConsultResponse.getData().getTotal_pages());
+        Assert.assertNotNull(unknownListConsultResponse.getData().getTotalPages());
         Assert.assertTrue(unknownListConsultResponse.getData().getData().isEmpty());
         Assert.assertNotNull(unknownListConsultResponse.getData().getSupport().getUrl());
         Assert.assertNotNull(unknownListConsultResponse.getData().getSupport().getText());
@@ -100,7 +100,7 @@ public class UnknownStepDefinitions {
         Assert.assertNotNull(unknownConsultResponse.getData().getData().getName());
         Assert.assertNotNull(unknownConsultResponse.getData().getData().getYear());
         Assert.assertNotNull(unknownConsultResponse.getData().getData().getColor());
-        Assert.assertNotNull(unknownConsultResponse.getData().getData().getPantone_value());
+        Assert.assertNotNull(unknownConsultResponse.getData().getData().getPantoneValue());
         Assert.assertNotNull(unknownConsultResponse.getData().getSupport().getUrl());
         Assert.assertNotNull(unknownConsultResponse.getData().getSupport().getText());
     }

@@ -1,5 +1,6 @@
 package com.automation.model;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,5 +16,6 @@ public class UnknownData {
 
     private String color;
 
-    private String pantone_value;
+    @SerializedName("pantone_value")
+    private String pantoneValue;
 }
