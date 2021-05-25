@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class UpdateUsersResponse extends ResponseError {
+public class UpdateUsersResponse {
 
     private String name;
 

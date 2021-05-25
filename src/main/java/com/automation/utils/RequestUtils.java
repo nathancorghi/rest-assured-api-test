@@ -45,6 +45,7 @@ public class RequestUtils {
 
         responseData.setData(response.then().extract().response().getBody().as((Type) clazz));
         responseData.setStatusCode(response.then().extract().response().getStatusCode());
+        responseData.setError(response.then().extract().response().getBody().jsonPath().get("error"));
 
         return responseData;
     }

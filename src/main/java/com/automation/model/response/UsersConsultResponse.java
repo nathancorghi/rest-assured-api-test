@@ -1,15 +1,15 @@
 package com.automation.model.response;
 
-import com.automation.model.Data;
+import com.automation.model.UsersData;
 import com.automation.model.Support;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UsersConsultResponse extends ResponseError {
+public class UsersConsultResponse {
 
-    private Data data;
+    private UsersData data;
 
     private Support support;
 }
